@@ -1,2 +1,2 @@
 # GameDev
-Hope some day here's something worth sharing :)
+Hope someday here's something worth sharing :)
