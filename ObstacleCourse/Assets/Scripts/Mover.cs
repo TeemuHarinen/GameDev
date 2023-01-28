@@ -29,8 +29,10 @@ public class Mover : MonoBehaviour
 
     void MovePlayer()
     {
+        // Time.deltaTime makes movement framerate independent
         float xValue = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeed;
         float zValue = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeed;
+        // Access the objects transform attribute to move it
         transform.Translate(xValue, 0, zValue);
     }
 }
