@@ -9,6 +9,10 @@ public class Scorer : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {   
+        if (other.gameObject.tag == "Plane")
+        {
+            return;
+        }
         if (other.gameObject.tag != "Hit") 
         {
             hits++;
