@@ -5,7 +5,9 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     Rigidbody rBody;
-    [SerializeField] float ThrustMultiplier = 100f;
+    [SerializeField] float thrustMultiplier = 100f;
+    [SerializeField] float rotationSpeed = 100f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,20 +25,26 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            rBody.AddRelativeForce(Vector3.up * ThrustMultiplier * Time.deltaTime);
+            rBody.AddRelativeForce(Vector3.up * thrustMultiplier * Time.deltaTime);
         }
     }
-
     void ProcessRotation()
     {
         if (Input.GetKey(KeyCode.A))
         {
-            Debug.Log("Left");
+            ApplyRotation(rotationSpeed);
         }
 
         else if (Input.GetKey(KeyCode.D))
         {
-            Debug.Log("Right");
+            ApplyRotation(-rotationSpeed);
         }
+    }
+
+    void ApplyRotation(float rotationThisFrame)
+    {
+        rBody.freezeRotation = true; // Freeze rBody rotation to stop two systems accessing rotation
+        transform.Rotate(Vector3.forward * rotationThisFrame * Time.deltaTime);
+        rBody.freezeRotation = false;
     }
 }
