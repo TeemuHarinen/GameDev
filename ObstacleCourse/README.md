@@ -1,4 +1,4 @@
-A game where you need to dodge many types of objects such as spinners, rolling balls etc. Featurea a scorer to keep track of object hits.
+A game where you need to dodge many types of objects such as spinners, rolling balls etc. Features a scorer to keep track of object hits.
 
 Game footage:
 
