@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    
     [SerializeField] float thrustMultiplier = 100f;
     [SerializeField] float rotationSpeed = 100f;
 
@@ -17,14 +16,12 @@ public class Movement : MonoBehaviour
     Rigidbody rBody;
     AudioSource audioSource;
 
-    // Start is called before the first frame update
     void Start()
     {
         rBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         ProcessThrust();
@@ -35,47 +32,74 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            rBody.AddRelativeForce(Vector3.up * thrustMultiplier * Time.deltaTime);
-            if (!audioSource.isPlaying)
-            {
-                audioSource.PlayOneShot(engineSound);
-            }
-
-            if (!mainThrustParticles.isPlaying)
-            {
-                mainThrustParticles.Play();
-            }
-            
-        
-
-        } else {
-            audioSource.Stop();
-            mainThrustParticles.Stop();
+            StartThrust();
+        }
+        else
+        {
+            StopThrust();
         }
     }
+
     void ProcessRotation()
     {
         if (Input.GetKey(KeyCode.A))
-        {   
-            ApplyRotation(rotationSpeed);
-            if(!rightThrustParticles.isPlaying)
-            {
-                rightThrustParticles.Play();
-            }
+        {
+            TurnLeft();
         }
 
         else if (Input.GetKey(KeyCode.D))
-        {   
-            ApplyRotation(-rotationSpeed);
-            if(!leftThrustParticles.isPlaying)
-            {
-                leftThrustParticles.Play();
-            }
+        {
+            TurnRight();
 
-        } else {
-            leftThrustParticles.Stop();
-            rightThrustParticles.Stop();
         }
+        else
+        {
+            StopTurn();
+        }
+    }
+
+    void StartThrust()
+    {
+        rBody.AddRelativeForce(Vector3.up * thrustMultiplier * Time.deltaTime);
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(engineSound);
+        }
+
+        if (!mainThrustParticles.isPlaying)
+        {
+            mainThrustParticles.Play();
+        }
+    }
+
+    void StopThrust()
+    {
+        audioSource.Stop();
+        mainThrustParticles.Stop();
+    }
+
+    void TurnLeft()
+    {
+        ApplyRotation(rotationSpeed);
+        if (!rightThrustParticles.isPlaying)
+        {
+            rightThrustParticles.Play();
+        }
+    }
+
+    void TurnRight()
+    {
+        ApplyRotation(-rotationSpeed);
+        if (!leftThrustParticles.isPlaying)
+        {
+            leftThrustParticles.Play();
+        }
+    }
+
+    void StopTurn()
+    {
+        leftThrustParticles.Stop();
+        rightThrustParticles.Stop();
     }
 
     void ApplyRotation(float rotationThisFrame)

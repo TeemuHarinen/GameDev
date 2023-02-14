@@ -13,15 +13,25 @@ public class CollisionHandler : MonoBehaviour
     AudioSource audioSource;
     
     bool isTransitioning = false;
+    bool disableCollisions = false;
 
-    void Start(){
+    void Start()
+    {
         audioSource = GetComponent<AudioSource>();
-        
     }
-    
+
+    void Update() 
+    {   
+        // Cheats key for debugging/testing. 
+        // Press L to skip to next level or C to disable collisions
+        if (Input.GetKeyDown(KeyCode.L)) {StartNextLevel();}
+        if (Input.GetKeyDown(KeyCode.C)) {disableCollisions = !disableCollisions;} // Toggle
+    }
+
     void OnCollisionEnter(Collision other) {
         // Stops collision events after one has happened
-        if (isTransitioning) {return;}
+        if (disableCollisions) {return;}
+        if (isTransitioning || disableCollisions) {return;}
 
         switch (other.gameObject.tag)
         {
@@ -60,6 +70,7 @@ public class CollisionHandler : MonoBehaviour
         GetComponent<Movement>().enabled = false;
         Invoke("LoadNextLevel", delay);
     }
+
     void ReloadLevel() {
         int currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentLevelIndex);
