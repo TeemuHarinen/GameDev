@@ -11,7 +11,6 @@ public class Oscillator : MonoBehaviour
     void Start()
     {
         startingPos = transform.position;
-        
     }
 
     void Update()

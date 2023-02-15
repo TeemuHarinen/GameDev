@@ -29,14 +29,13 @@ public class CollisionHandler : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision other) {
-        // Stops collision events after one has happened
-        if (disableCollisions) {return;}
+        /* Stops collision events after one has happened
+        and checks whether disableCollisions cheatkey is enabled */
         if (isTransitioning || disableCollisions) {return;}
 
         switch (other.gameObject.tag)
         {
             case "Friendly":
-                Debug.Log("Friendly");
                 break;
 
             case "Finish":
