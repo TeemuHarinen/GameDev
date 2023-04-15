@@ -1,23 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] float xSpeedMultiplier = 50f;
+    [SerializeField] float ySpeedMultiplier = 50f;
+    [SerializeField] float xRange = 5f;
+    [SerializeField] float yRange = 5f;
 
-    // Update is called once per frame
+    
     void Update()
     {
-        float horizontalThrow = Input.GetAxis("Horizontal");
-        Debug.Log(horizontalThrow);
+        float xThrow = Input.GetAxis("Horizontal");
+        float yThrow = Input.GetAxis("Vertical");
 
-        float verticalThrow = Input.GetAxis("Vertical");
-        Debug.Log(verticalThrow);
+        float xOffset = xThrow * Time.deltaTime * xSpeedMultiplier;
+        float rawXPos = transform.localPosition.x + xOffset;
+        float clampedXPos = Mathf.Clamp(rawXPos, -xRange, xRange);
+
+        float yOffset = yThrow * Time.deltaTime * ySpeedMultiplier;
+        float rawYPos = transform.localPosition.y + yOffset;
+        float clampedYPos = Mathf.Clamp(rawYPos, -yRange + 3, yRange);
+
+        transform.localPosition = new Vector3(clampedXPos, clampedYPos, transform.localPosition.z);
         
     }
 }
